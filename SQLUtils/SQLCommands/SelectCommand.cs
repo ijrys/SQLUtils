@@ -99,7 +99,6 @@ namespace MiRaI.SQLUtils {
 		public SelectCommand() : this(null) {
 			Columns = null;
 		}
-
 		public SelectCommand(string connStr) : base(connStr) {
 			Columns = null;
 			JoinExps = new List<JoinExp<SelectCommand>>();

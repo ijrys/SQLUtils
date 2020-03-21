@@ -3,26 +3,19 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace MiRaI.SQLUtils {
-
-
-	class DeleteCommand : Command<DeleteCommand> {
+	class DeleteCommand : TableCommand<DeleteCommand> {
 		private NonQueryExecuter Executer { get; set; }
 
-		public Table Table { get; private set; }
 		public string WhereExp { get; private set; }
 		public bool SafetyCheck { get; set; }
 
-		public DeleteCommand From(string table) {
-			Table = new Table().TableName(table);
-			return this;
-		}
-		public DeleteCommand From(Table table) {
-			Table = table;
+		public DeleteCommand SetSafetyCheck(bool safetyCheck) {
+			SafetyCheck = safetyCheck;
 			return this;
 		}
 
-		public DeleteCommand SetSafetyCheck(bool safetyCheck) {
-			SafetyCheck = safetyCheck;
+		public DeleteCommand Where(string whereExp) {
+			WhereExp = whereExp;
 			return this;
 		}
 
