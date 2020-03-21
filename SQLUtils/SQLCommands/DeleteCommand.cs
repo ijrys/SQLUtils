@@ -12,11 +12,6 @@ namespace MiRaI.SQLUtils {
 		public string WhereExp { get; private set; }
 		public bool SafetyCheck { get; set; }
 
-		public DeleteCommand Where(string whereExp) {
-			WhereExp = whereExp;
-			return this;
-		}
-
 		public DeleteCommand From(string table) {
 			Table = new Table().TableName(table);
 			return this;
@@ -59,8 +54,6 @@ namespace MiRaI.SQLUtils {
 			}
 			return Executer;
 		}
-
-
 
 		public DeleteCommand(string connStr) : base(connStr) {
 		}

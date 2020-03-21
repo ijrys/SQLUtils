@@ -8,9 +8,8 @@ namespace MiRaI.SQLUtils {
 
 		public abstract string CommandScript();
 
-		internal Command(string connStr) {
+		public Command(string connStr) {
 			ConnectionString = connStr;
-
 		}
 	}
 
@@ -21,8 +20,27 @@ namespace MiRaI.SQLUtils {
 			return this as T;
 		}
 
-		internal Command(string connStr) : base(connStr) {
+		public Command(string connStr) : base(connStr) {
 			Parameters = new Dictionary<string, object>();
+		}
+	}
+
+	public abstract class TableCommand <T>:Command<T> where T : Command {
+		public Table Table { get; protected set; }
+		public T From(string table) {
+			Table = new Table().TableName(table);
+			return this as T;
+		}
+		public T From(string table, string asname) {
+			Table = new Table().TableName(table).AS(asname);
+			return this as T;
+		}
+		public T From(Table table) {
+			Table = table;
+			return this as T;
+		}
+
+		public TableCommand(string connStr) : base(connStr) {
 		}
 	}
 }
