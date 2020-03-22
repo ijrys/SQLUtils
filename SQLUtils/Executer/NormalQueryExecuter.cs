@@ -4,8 +4,8 @@ using System.Data.SqlClient;
 using System.Text;
 
 namespace MiRaI.SQLUtils {
-	public class FullQueryExecuter : Executer<FullQueryExecuter> {
-		public delegate object ConvertReaderToEntity(SqlDataReader reader);
+	public delegate object ConvertReaderToEntity(SqlDataReader reader);
+	public class NormalQueryExecuter : Executer<NormalQueryExecuter> {
 
 		public int NonQuery() {
 			using (SqlConnection conn = Connection()) {
@@ -25,7 +25,7 @@ namespace MiRaI.SQLUtils {
 			}
 		}
 
-		public object Scalar () {
+		public object Scalar() {
 			using (SqlConnection conn = Connection()) {
 				using (SqlCommand cmd = conn.CreateCommand()) {
 					cmd.CommandText = SQLScript;
@@ -94,7 +94,7 @@ namespace MiRaI.SQLUtils {
 			}
 		}
 
-		public FullQueryExecuter(string connstr, string script, Dictionary<string, object> parameters) : base(connstr, script, parameters) {
+		public NormalQueryExecuter(string connstr, string script, Dictionary<string, object> parameters) : base(connstr, script, parameters) {
 		}
 	}
 }

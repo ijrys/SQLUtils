@@ -4,7 +4,7 @@ using System.Text;
 
 namespace MiRaI.SQLUtils {
 	public class SelectCommand : TableCommand<SelectCommand>{
-		private FullQueryExecuter Executer { get; set; }
+		private NormalQueryExecuter Executer { get; set; }
 		public string Columns { get; private set; }
 		public string WhereExp { get; protected set; }
 		public List<JoinExp<SelectCommand>> JoinExps { get; private set; }
@@ -88,9 +88,9 @@ namespace MiRaI.SQLUtils {
 			return script;
 		}
 
-		public FullQueryExecuter Execute() {
+		public NormalQueryExecuter Execute() {
 			if (Executer == null) {
-				Executer = new FullQueryExecuter(ConnectionString, CommandScript(), Parameters);
+				Executer = new NormalQueryExecuter(ConnectionString, CommandScript(), Parameters);
 			}
 			return Executer;
 		}

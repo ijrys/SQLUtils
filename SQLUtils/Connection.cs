@@ -21,6 +21,11 @@ namespace MiRaI.SQLUtils {
 		public DeleteCommand Delete() {
 			return new DeleteCommand(ConnectionString);
 		}
+
+		public ScriptCommand Script (string script) {
+			return new ScriptCommand(ConnectionString).Script(script);
+		}
+
 		public Connection(string connectionString) {
 			ConnectionString = connectionString;
 		}

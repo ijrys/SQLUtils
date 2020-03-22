@@ -7,13 +7,34 @@ namespace Test {
 	class Program {
 		static void Main(string[] args) {
 			SQL.DefaultConnectionString = "server=.\\SQLEXPRESS;database=MiRaIUser;User Id=miraiadmin;Password=123456";
-
-			DeleteTest();
+			//InsertTest();
+			ScriptTest();
 
 
 		}
 
-		static void DeleteTest () {
+		static void ScriptTest() {
+			string script = "select * from [User]";
+			Dictionary<string, object> values = SQL.Connection()
+				.Script(script)
+				.Execute()
+				.Reader((SqlDataReader reader) => {
+					Dictionary<string, object> values = new Dictionary<string, object>();
+					if (reader.Read()) {
+
+						for (int i = 0; i < reader.FieldCount; i++) {
+							values[reader.GetName(i)] = reader.GetValue(i);
+						}
+					}
+					return values;
+				}) as Dictionary<string, object>;
+
+			foreach (var item in values) {
+				Console.WriteLine($"{item.Key}    \t | {item.Value}");
+			}
+		}
+
+		static void DeleteTest() {
 			int re = SQL.Connection()
 				.Delete().From("User")
 				.SetSafetyCheck(false)
@@ -27,7 +48,7 @@ namespace Test {
 			int re = SQL.Connection()
 				.Insert().From("User")
 				.Columns("Account", "Password", "NickName", "Photo", "Email", "Phone", "State", "RegistDate", "Remarks")
-				.Value("test003", "003pwd", "test", "", "", "", (short) 3, DateTime.Now, "test 03")
+				.Value("test003", "003pwd", "test", "", "", "", (short)3, DateTime.Now, "test 03")
 				.Execute()
 				.NonQuery();
 			Console.WriteLine($"{re} row(s) changed");
