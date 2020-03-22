@@ -65,6 +65,7 @@ namespace MiRaI.SQLUtils {
 
 		public UpdateCommand(string connStr) : base(connStr) {
 			SetExps = new List<string>();
+			SafetyCheck = true;
 		}
 	}
 }

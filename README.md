@@ -9,7 +9,7 @@ use `SQL.DefaultConnectionString` to set default connection string
 
 use `SQL.Connection()` to get a Connection by  `DefaultConnectionString`
 
-## select
+## Select
 
 ``` c#
 Dictionary<string, object> values = SQL.Connection()
@@ -45,6 +45,59 @@ int re = SQL.Connection()
     .AppendSet("Name", "sqlutils")
     .Where("[id] = @id")
     .AddParameter("id", 1)
+    .Execute()
+    .NonQuery();
+Console.WriteLine($"{re} row(s) changed");
+```
+
+if you haven't set where expression by `[UpdateCommand].Where`,  it will throw `UnSafeExpressionException`
+
+if you want to update all datas, use `[UpdateCommand].SetSafetyCheck(bool)` to close safety check, like below:
+
+``` c#
+int re = SQL.Connection()
+    .Update().From("User")
+    .AppendSet("nickname", "sqlutils")
+    .SetSafetyCheck(false)
+    .AddParameter("id", 1)
+    .Execute()
+    .NonQuery();
+Console.WriteLine($"{re} row(s) changed");
+```
+
+## Insert
+
+``` c#
+int re = SQL.Connection()
+    .Insert().From("MainTable")
+    .Columns("Column0", "Column1", "Column2")
+    .Value("Value1", "Value2", DateTime.Now)
+    .Execute()
+    .NonQuery();
+Console.WriteLine($"{re} row(s) changed");
+```
+
+## Delete
+
+``` c#
+int re = SQL.Connection()
+    .Delete().From("MainTable")
+    .Where("id = @id")
+    .AddParameter("id", 3)
+    .Execute()
+    .NonQuery();
+Console.WriteLine($"{re} row(s) changed");
+```
+
+if you haven't set where expression by `[DeleteCommand].Where`,  it will throw `UnSafeExpressionException`
+
+if you want to delete all datas, use `[DeleteCommand].SetSafetyCheck(bool)` to close safety check, like below:
+
+``` c#
+int re = SQL.Connection()
+    .Delete().From("User")
+    .SetSafetyCheck(false)
+    .AddParameter("id", 3)
     .Execute()
     .NonQuery();
 Console.WriteLine($"{re} row(s) changed");

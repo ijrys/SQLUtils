@@ -49,6 +49,7 @@ namespace MiRaI.SQLUtils {
 		}
 
 		public DeleteCommand(string connStr) : base(connStr) {
+			SafetyCheck = true;
 		}
 	}
 }

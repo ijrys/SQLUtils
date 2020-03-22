@@ -8,18 +8,38 @@ namespace Test {
 		static void Main(string[] args) {
 			SQL.DefaultConnectionString = "server=.\\SQLEXPRESS;database=MiRaIUser;User Id=miraiadmin;Password=123456";
 
-			UpdateTest();
+			DeleteTest();
 
 
 		}
 
-		static void UpdateTest () {
+		static void DeleteTest () {
+			int re = SQL.Connection()
+				.Delete().From("User")
+				.SetSafetyCheck(false)
+				.AddParameter("id", 3)
+				.Execute()
+				.NonQuery();
+			Console.WriteLine($"{re} row(s) changed");
+		}
+
+		static void InsertTest() {
+			int re = SQL.Connection()
+				.Insert().From("User")
+				.Columns("Account", "Password", "NickName", "Photo", "Email", "Phone", "State", "RegistDate", "Remarks")
+				.Value("test003", "003pwd", "test", "", "", "", (short) 3, DateTime.Now, "test 03")
+				.Execute()
+				.NonQuery();
+			Console.WriteLine($"{re} row(s) changed");
+		}
+
+		static void UpdateTest() {
 			SelectTest();
 
 			int re = SQL.Connection()
 				.Update().From("User")
 				.AppendSet("nickname", "sqlutils")
-				.Where("[id] = @id")
+				.SetSafetyCheck(false)
 				.AddParameter("id", 1)
 				.Execute()
 				.NonQuery();
@@ -28,7 +48,7 @@ namespace Test {
 			SelectTest();
 		}
 
-		static void SelectTest () {
+		static void SelectTest() {
 			Dictionary<string, object> values = SQL.Connection()
 				.Select()
 				.From("User", "a")
