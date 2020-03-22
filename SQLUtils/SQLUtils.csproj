@@ -4,6 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Authors>ijrys</Authors>
     <Company>MiRaI</Company>
+    <RootNamespace>MiRaI.SQLUtils</RootNamespace>
+    <AssemblyName>MiRaI.SQLUtils</AssemblyName>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

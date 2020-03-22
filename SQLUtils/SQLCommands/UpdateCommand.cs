@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace MiRaI.SQLUtils {
-	class UpdateCommand : TableCommand<UpdateCommand> {
+	public class UpdateCommand : TableCommand<UpdateCommand> {
 		public List<string> SetExps { get; private set; }
+		public NonQueryExecuter Executer { get; private set; }
 
 		public string WhereExp { get; private set; }
 		public bool SafetyCheck { get; set; }
@@ -28,6 +29,13 @@ namespace MiRaI.SQLUtils {
 			SetExps.Add(exp);
 			return this;
 		}
+
+		public NonQueryExecuter Execute () {
+			if (Executer == null) {
+				Executer = new NonQueryExecuter(ConnectionString, CommandScript(), Parameters);
+			}
+			return Executer;
+		} 
 
 		public override string CommandScript() {
 			if (SafetyCheck && string.IsNullOrEmpty(WhereExp)) {
@@ -56,6 +64,7 @@ namespace MiRaI.SQLUtils {
 		}
 
 		public UpdateCommand(string connStr) : base(connStr) {
+			SetExps = new List<string>();
 		}
 	}
 }

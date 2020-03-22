@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using System.Text;
 
 namespace MiRaI.SQLUtils {
-	class NonQueryExecuter: Executer {
+	public class NonQueryExecuter: Executer {
 		public NonQueryExecuter(string connstr, string script, Dictionary<string, object> pairs) : base(connstr, script, pairs) {
 		}
 

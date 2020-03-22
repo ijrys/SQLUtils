@@ -7,7 +7,9 @@ namespace MiRaI.SQLUtils {
 		public static string DefaultConnectionString { get; set; }
 
 
-		
+		public static Connection Connection() {
+			return new Connection(DefaultConnectionString);
+		}
 
 		public static Connection Connection (string connectionString) {
 			return new Connection(connectionString);

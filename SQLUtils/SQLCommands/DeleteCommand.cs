@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace MiRaI.SQLUtils {
-	class DeleteCommand : TableCommand<DeleteCommand> {
+	public class DeleteCommand : TableCommand<DeleteCommand> {
 		private NonQueryExecuter Executer { get; set; }
 
 		public string WhereExp { get; private set; }
