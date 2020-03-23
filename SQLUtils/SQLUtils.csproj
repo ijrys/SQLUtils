@@ -6,6 +6,10 @@
     <Company>MiRaI</Company>
     <RootNamespace>MiRaI.SQLUtils</RootNamespace>
     <AssemblyName>MiRaI.SQLUtils</AssemblyName>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyVersion>1.0.0.2</AssemblyVersion>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
