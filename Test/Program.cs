@@ -8,9 +8,20 @@ namespace Test {
 		static void Main(string[] args) {
 			SQL.DefaultConnectionString = "server=.\\SQLEXPRESS;database=MiRaIUser;User Id=miraiadmin;Password=123456";
 			//InsertTest();
-			ScriptTest();
+			ProcessTest();
 
 
+		}
+
+		static void ProcessTest() {
+			var cmd = SQL.Connection()
+				.Process().From("dbo", "RegUserTmpKey");
+			Console.WriteLine(cmd.CommandScript());
+			int re = cmd
+				.Execute(1L, 2L, 3)
+				.NonQuery();
+
+			Console.WriteLine(re);
 		}
 
 		static void ScriptTest() {

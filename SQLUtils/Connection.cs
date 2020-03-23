@@ -26,6 +26,10 @@ namespace MiRaI.SQLUtils {
 			return new ScriptCommand(ConnectionString).Script(script);
 		}
 
+		public ProcessCommand Process () {
+			return new ProcessCommand(ConnectionString);
+		}
+
 		public Connection(string connectionString) {
 			ConnectionString = connectionString;
 		}

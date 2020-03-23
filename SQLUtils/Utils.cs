@@ -22,12 +22,13 @@ namespace MiRaI.SQLUtils {
 		public static string MergeSchemaAndTable(string schema, string table) {
 			string fname;
 			schema = schema.Trim();
+			table = table.Trim();
 			if (!string.IsNullOrEmpty(schema)) {
 				fname = SafetyEntityName(schema) + ".";
 			} else {
 				fname = "";
 			}
-			fname += SafetyEntityName(schema);
+			fname += SafetyEntityName(table);
 
 			return fname;
 		}

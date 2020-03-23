@@ -25,17 +25,29 @@ namespace MiRaI.SQLUtils {
 		}
 	}
 
-	public abstract class TableCommand <T>:Command<T> where T : Command {
-		public Table Table { get; protected set; }
+	public abstract class TableCommand<T> : Command<T> where T : Command {
+		public DataEntity<T> Table { get; protected set; }
+
 		public T From(string table) {
-			Table = new Table().TableName(table);
+			Table = new DataEntity<T>(this as T).EntityName(table);
 			return this as T;
 		}
-		public T From(string table, string asname) {
-			Table = new Table().TableName(table).AS(asname);
+		public T From(string schema, string table) {
+			Table = new DataEntity<T>(this as T);
+			Table.EntityName(schema, table).AS();
 			return this as T;
 		}
-		public T From(Table table) {
+
+		public T FromAs(string table, string asname) {
+			Table = new DataEntity<T>(this as T);
+			return Table.EntityName(table).AS(asname);
+		}
+		public T FromAs(string schema, string table, string asname) {
+			Table = new DataEntity<T>(this as T);
+			return Table.EntityName(schema, table).AS(asname);
+		}
+
+		public T From(DataEntity<T> table) {
 			Table = table;
 			return this as T;
 		}

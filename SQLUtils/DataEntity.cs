@@ -3,10 +3,16 @@ using System.Collections.Generic;
 using System.Text;
 
 namespace MiRaI.SQLUtils {
-	public class Table {
+	/// <summary>
+	/// a entity contents datas, like table and exectued process
+	/// </summary>
+	/// <typeparam name="T"></typeparam>
+	public class DataEntity<T> where T:Command {
 		public string TableExpression { get; private set; }
 		public string ShortName { get; private set; }
-		public Table TableName(string name) {
+		private T RebackObject { get; set; }
+
+		public DataEntity<T> EntityName(string name) {
 			if (string.IsNullOrWhiteSpace(name)) {
 				TableExpression = null;
 			}
@@ -15,7 +21,12 @@ namespace MiRaI.SQLUtils {
 			}
 			return this;
 		}
-		public Table SelectExpression(string expression) {
+		public DataEntity<T> EntityName(string schema, string name) {
+			string exp = Utils.MergeSchemaAndTable(schema, name);
+			TableExpression = exp;
+			return this;
+		}
+		public DataEntity<T> SelectExpression(string expression) {
 			if (string.IsNullOrWhiteSpace(expression)) {
 				TableExpression = null;
 			}
@@ -27,12 +38,17 @@ namespace MiRaI.SQLUtils {
 			}
 			return this;
 		}
-		public Table AS(string asname) {
+
+		public T AS () {
+			ShortName = string.Empty;
+			return RebackObject;
+		}
+		public T AS(string asname) {
 			if (string.IsNullOrWhiteSpace(asname)) {
 				asname = null;
 			}
 			ShortName = Utils.SafetyEntityName(asname);
-			return this;
+			return RebackObject;
 		}
 
 		public string CommandScript() {
@@ -44,6 +60,10 @@ namespace MiRaI.SQLUtils {
 				re += " as " + ShortName;
 			}
 			return re;
+		}
+
+		public DataEntity(T rebackObj) {
+			RebackObject = rebackObj;
 		}
 	}
 }

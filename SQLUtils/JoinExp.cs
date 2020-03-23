@@ -12,25 +12,27 @@ namespace MiRaI.SQLUtils {
 	}
 	public class JoinExp<T> where T : Command {
 		public JoinType Type { get; set; }
-		public Table Table { get; set; }
+		public DataEntity<T> Table { get; set; }
 		public string OnExp { get; set; }
 		public T Command { get; private set; }
 
 
 		public JoinExp<T> Join(string table) {
-			Table = new Table().TableName(table);
+			Table = new DataEntity<T>(Command).EntityName(table);
 			return this;
 		}
 		public JoinExp<T> Join(string table, string asname) {
-			Table = new Table().TableName(table).AS(asname);
+			Table = new DataEntity<T>(Command);
+			Table.EntityName(table).AS(asname);
 			return this;
 		}
-		public JoinExp<T> Join(Table table) {
+		public JoinExp<T> Join(DataEntity<T> table) {
 			Table = table;
 			return this;
 		}
 		public JoinExp<T> Join(SelectCommand selectedtable, string asname) {
-			Table = new Table().SelectExpression(selectedtable.CommandScript()).AS(asname);
+			Table = new DataEntity<T>(Command);
+			Table.SelectExpression(selectedtable.CommandScript()).AS(asname);
 			return this;
 		}
 
