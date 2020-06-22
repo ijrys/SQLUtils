@@ -8,9 +8,9 @@ namespace Test {
 		static void Main(string[] args) {
 			SQL.DefaultConnectionString = "server=.\\SQLEXPRESS;database=MiRaIUser;User Id=miraiadmin;Password=123456";
 			//InsertTest();
-			ProcessTest();
-
-
+			//ProcessTest();
+			SelectLines();
+			//SelectTest();
 		}
 
 		static void ProcessTest() {
@@ -83,13 +83,13 @@ namespace Test {
 		static void SelectTest() {
 			Dictionary<string, object> values = SQL.Connection()
 				.Select()
-				.From("User", "a")
-				.Outer.Join(
-					new SelectCommand()
-					.Select()
-					.From("UserTmpKey")
-					.Where("[UID] < 5"), "b")
-				.On("a.Id = b.UID")
+				.FromAs("User", "a")
+				//.Outer.Join(
+				//	new SelectCommand()
+				//	.Select()
+				//	.From("UserTmpKey")
+				//	.Where("[UID] < 5"), "b")
+				//.On("a.Id = b.UID")
 				.Where("a.[Id] = @id")
 				.AddParameter("id", 1)
 				.Execute()
@@ -103,6 +103,22 @@ namespace Test {
 
 			foreach (var item in values) {
 				Console.WriteLine($"{item.Key}    \t | {item.Value}");
+			}
+		}
+
+		static void SelectLines() {
+			List<int> ids = SQL.Connection()
+				.Select().From("User")
+				.Execute().Lines<int>(
+					(SqlDataReader reader, out bool append) => {
+						Console.WriteLine($"{reader["ID"]} - {reader["Account"]}");
+						append = true;
+						return (int)reader["ID"];
+					}
+				);
+
+			foreach (var item in ids) {
+				Console.WriteLine(item);
 			}
 		}
 	}

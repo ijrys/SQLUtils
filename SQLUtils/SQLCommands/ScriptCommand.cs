@@ -5,7 +5,7 @@ using System.Text;
 namespace MiRaI.SQLUtils {
 	public class ScriptCommand : Command<ScriptCommand> {
 		public string SQLScript { get; set; }
-		public FullFunctionExecuter Executer { get; private set; }
+		public NormalQueryExecuter Executer { get; private set; }
 
 		public ScriptCommand Script(string script) {
 			SQLScript = script;
@@ -16,9 +16,9 @@ namespace MiRaI.SQLUtils {
 			return SQLScript;
 		}
 
-		public FullFunctionExecuter Execute() {
+		public NormalQueryExecuter Execute() {
 			if (Executer == null) {
-				Executer = new FullFunctionExecuter(ConnectionString, CommandScript(), Parameters);
+				Executer = new NormalQueryExecuter(ConnectionString, CommandScript(), Parameters);
 			}
 			return Executer;
 		}
